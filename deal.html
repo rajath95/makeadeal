@@ -1,0 +1,201 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title> DEAL MAKER </title>
+    <style>
+
+    body{
+  background-image: url("beige2.jpg");
+
+
+    }
+
+    .button {
+      border-radius: 25px;
+      background-color: palegoldenrod;
+      border: none;
+      color: deeppink;
+      padding: 10px 22px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      font-family: Rubik Medium;
+      margin: 4px 2px;
+      cursor: pointer;
+      margin-left:85%;
+      }
+
+      .button:hover {
+        background-color:coral;
+        color:gold;
+        }
+      img {
+        height:180; width:250;
+        margin-right:20px; margin-bottom:20px;
+        margin-left:20px; margin-top:30px;
+          }
+
+      #title{
+        border-radius: 25px;
+        border-color:blue;
+        border-width:10px;
+        border-style:groove;
+        padding:10px;
+        background-color:blanchedalmond;
+        color:limegreen;
+        position:absolute;
+        margin-left:40%;
+
+      }
+
+
+      #placement {
+        border-radius: 30px;
+        position: relative; /* or absolute */
+        margin-top:10%;
+        margin-left:20%;
+        margin-right:30%;
+        padding:10px;
+        background-color:darksalmon;
+        display: inline-block;
+
+          }
+
+      #rules {
+        position:absolute;
+        border-radius: 25px;
+        border: 10px dotted black;
+        top:10%;
+        padding:50px;
+        margin-left:80%;
+        font-size:30px;
+        background-color:silver;
+        color:ghostwhite;
+        font-family:Titania;
+      }
+
+      #banner,#commentary{
+        margin-left:10px;
+        font-size: 30px;
+        color: black;
+        font-family:Rubik;
+        text-align:center;
+      }
+ </style>
+</head>
+<body>
+    <div id="title">
+    <h1>  Make a Deal! </h1>  </div>
+
+    <div id="placement">
+      <span>
+      <img id="1" src="curtain.jpg">
+      <img id="2" src="curtain.jpg">
+      <img id="3" src="curtain.jpg">
+      </span>
+      <span>
+      <img id="4" src="curtain.jpg">
+      <img id="5" src="curtain.jpg">
+      <img id="6" src="curtain.jpg">
+      <img id="7" src="curtain.jpg">
+      <img id="8" src="curtain.jpg">
+      <img id="9" src="curtain.jpg">
+      </span>
+      <p id="banner"> Win Prize if you are lucky! <br/>
+      </p>
+      <p id="commentary"> You have 4 chances! </p>
+      <button type="button" class="button" onclick="location.reload()">Play Again</button>
+    </div>
+
+    <div id="rules">
+      <p> Rules </p>
+      <p> You have 4 chances pick a room </p>
+      <p> Winner gets a reward </p>
+    </div>
+
+
+    <script>
+    function gen(){
+      var arr = [];
+      while(arr.length < 1){
+        var r = Math.floor(Math.random() * 9) + 1;
+        if(arr.indexOf(r) === -1) arr.push(r);
+      }
+      return arr[0];
+    }
+    var images = document.getElementsByTagName("img");
+    for (var i = 0; i < images.length; i++) {
+      images[i].flag=true;
+      images[i].onmousemove=imagepreview;
+      images[i].onmouseout=origimg;
+      images[i].onclick=revealimage;
+    }
+
+    var victory=false;
+    var attempt=0;
+
+    index=gen()-1;
+    console.log(index);
+    images[index].onclick=revealprize;
+    function imagepreview(event)
+    {
+      image=event.target;
+      if(image.flag)
+      {
+        image.src="hover.jpg";
+      }
+    }
+    function origimg(event)
+    {
+     image=event.target;
+     if(image.flag)
+     {
+        image.src="curtain.jpg";
+      }
+
+    }
+
+    function revealimage(event)
+    {
+      if(attempt<4)
+      {
+        image=event.target;
+        image.src="goat.jpg";
+        image.flag=false;
+        attempt++;
+        freshtext();
+      }
+    }
+
+    function revealprize(event)
+    {
+      if(attempt<4)
+      {
+        image=event.target;
+        image.src="car.jpeg";
+        image.flag=false;
+        victory=true;
+        attempt++;
+        freshtext();
+      }
+    }
+
+    function freshtext(){
+
+      if(victory)
+      {
+        para=document.getElementById("commentary");
+        para.textContent="Congratulations! You won 🚗🎈";
+        attempt=4;
+
+      }
+      else
+      {
+      para=document.getElementById("commentary");
+      para.textContent="You have "+(4-attempt)+"  more chance!";
+     }
+    }
+  </script>
+  </body>
+</html>
